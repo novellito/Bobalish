@@ -1,0 +1,12 @@
+<div *ngIf="loading">
+  Loading...
+  ss{{rates | async | select:'loading'}}
+</div>
+<div *ngIf="error">
+  Error :(
+</div>
+<div *ngIf="rates">
+  <div *ngFor="let rate of rates | async">
+    <p>{{rate.currency}}: {{rate.rate}}</p>
+  </div>
+</div>
