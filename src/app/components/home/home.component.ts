@@ -3,7 +3,9 @@ import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { User, Query } from './types';
+import { User, Query, Drink } from './types';
+import { ListManagerService } from '../services/list-manager.service';
+import { NgForm } from '@angular/forms';
 
 const query = gql`
   {
@@ -16,14 +18,20 @@ const query = gql`
 `;
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
   data: Observable<User[]>;
-
-  constructor(private apollo: Apollo) {}
+  drinks: Drink[] = [];
+  wowser = 'woooooowser';
+  constructor(
+    private apollo: Apollo,
+    private listManager: ListManagerService
+  ) {}
 
   ngOnInit() {
+    this.drinks = this.listManager.drinks;
     this.data = this.apollo
       .watchQuery<Query>({
         query: query
@@ -34,5 +42,11 @@ export class HomeComponent implements OnInit {
           return data.users;
         })
       );
+  }
+
+  handleSubmit(form: NgForm) {
+    this.listManager.addItem(form);
+    // form.reset();
+    // console.log(form);
   }
 }

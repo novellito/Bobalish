@@ -1,0 +1,28 @@
+@mixin container($val) {
+  padding: $val;
+}
+.container {
+  @include container(50px);
+  //   padding: 50px;
+}
+
+.example-form {
+  //   min-width: 150px;
+  //   max-width: 500px;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .user-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 1em;
+  }
+
+  .container {
+    padding: 100px;
+  }
+}

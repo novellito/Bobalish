@@ -5,6 +5,7 @@ export type User = {
 export type Drink = {
   name: string;
   place: string;
+  price: number;
 };
 
 export type Query = {

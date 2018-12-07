@@ -1,17 +1,27 @@
 <div *ngIf="loading">Loading...</div>
 <div *ngIf="error">Error :(</div>
 
-<button mat-button color="primary">Primary</button>
-<button mat-raised-button color="primary">Primary</button>
-<form class="example-form">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Favorite food" value="Sushi" />
-  </mat-form-field>
+<div class="container">
+  <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
+    <div class="user-form">
+      <mat-form-field class="example-full-width">
+        <input ngModel matInput placeholder="Name/Flavor" name="name" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input ngModel matInput placeholder="From" name="from" />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input ngModel matInput placeholder="Price" name="price" />
+      </mat-form-field>
+    </div>
+  </form>
 
-  <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Leave a comment"></textarea>
-  </mat-form-field>
-</form>
+  <button mat-raised-button color="primary" form="ngForm" type="submit">
+    Primary
+  </button>
+
+  <app-drinks-list [drink]="wowser"></app-drinks-list>
+</div>
 <ul *ngFor="let follower of (data | async)">
   <li>{{ follower.name }} {{ follower.id }}</li>
 </ul>
