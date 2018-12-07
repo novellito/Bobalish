@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./drinks-list.component.scss']
 })
 export class DrinksListComponent implements OnInit {
-  @Input() drink: any = null;
+  @Input() drinks: any = null;
 
   constructor() {}
 

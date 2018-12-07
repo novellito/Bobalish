@@ -4,7 +4,7 @@ export type User = {
 };
 export type Drink = {
   name: string;
-  place: string;
+  from: string;
   price: number;
 };
 

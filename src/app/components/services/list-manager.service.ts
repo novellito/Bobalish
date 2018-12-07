@@ -8,7 +8,7 @@ export class ListManagerService {
 
   constructor() {}
 
-  addItem(form: any) {
-    console.log(form);
+  addItem({ name, from, price }: any) {
+    this.drinks.push({ name, from, price });
   }
 }

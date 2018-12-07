@@ -11,7 +11,17 @@
         <input ngModel matInput placeholder="From" name="from" />
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input ngModel matInput placeholder="Price" name="price" />
+        <input
+          [(ngModel)]="value"
+          matInput
+          placeholder="Price"
+          name="price"
+          currencyMask
+          [options]="{
+            precision: '2',
+            align: 'left'
+          }"
+        />
       </mat-form-field>
     </div>
   </form>
@@ -20,7 +30,7 @@
     Primary
   </button>
 
-  <app-drinks-list [drink]="wowser"></app-drinks-list>
+  <app-drinks-list [drinks]="drinks"></app-drinks-list>
 </div>
 <ul *ngFor="let follower of (data | async)">
   <li>{{ follower.name }} {{ follower.id }}</li>

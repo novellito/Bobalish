@@ -1,1 +1,6 @@
-<p>drinks-list works! {{ drink }}</p>
+<p>drinks-list works! {{ drinks }}</p>
+<ul>
+  <li *ngFor="let drink of drinks">
+    {{ drink.name }} | {{ drink.from }} | ${{ drink.price }}
+  </li>
+</ul>
