@@ -24,7 +24,7 @@ const query = gql`
 export class HomeComponent implements OnInit {
   data: Observable<User[]>;
   drinks: Drink[] = [];
-  // wowser = this.listManager.drinks;
+  selected = { name: 'poop' };
   constructor(
     private apollo: Apollo,
     private listManager: ListManagerService
@@ -46,7 +46,8 @@ export class HomeComponent implements OnInit {
 
   handleSubmit(form: NgForm) {
     const { name, from, price } = form.value;
+
     this.listManager.addItem({ name, from, price });
-    // form.reset();
+    form.reset();
   }
 }

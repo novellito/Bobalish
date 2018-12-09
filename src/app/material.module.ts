@@ -4,7 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCheckboxModule,
-  MatInputModule
+  MatInputModule,
+  MatTableModule,
+  MatIconModule
 } from '@angular/material';
 
 @NgModule({
@@ -12,7 +14,9 @@ import {
     MatButtonModule,
     MatCheckboxModule,
     BrowserAnimationsModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatIconModule
   ]
 })
 export class MaterialModule {}

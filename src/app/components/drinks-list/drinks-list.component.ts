@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ListManagerService } from '../services/list-manager.service';
 
 @Component({
   selector: 'app-drinks-list',
@@ -6,9 +7,23 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./drinks-list.component.scss']
 })
 export class DrinksListComponent implements OnInit {
-  @Input() drinks: any = null;
+  // old example of passing data
+  // @Input() drinks: any = this.listManager.data;
 
-  constructor() {}
+  datasource = this.listManager.data;
+
+  // dataSource = new MatTableDataSource(this.drinks);
+  displayedColumns: string[] = ['name', 'from', 'price', 'actions'];
+
+  constructor(private listManager: ListManagerService) {}
 
   ngOnInit() {}
+
+  edit(index: number) {
+    console.log(index);
+  }
+  delete(index: number) {
+    this.listManager.drinks.splice(index, 1);
+    console.log(this.listManager.drinks);
+  }
 }

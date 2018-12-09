@@ -1,18 +1,25 @@
-<div *ngIf="loading">Loading...</div>
-<div *ngIf="error">Error :(</div>
-
 <div class="container">
   <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
     <div class="user-form">
       <mat-form-field class="example-full-width">
-        <input ngModel matInput placeholder="Name/Flavor" name="name" />
-      </mat-form-field>
-      <mat-form-field class="example-full-width">
-        <input ngModel matInput placeholder="From" name="from" />
+        <input
+          [ngModel]="this.listManager.drinkToEdit.name"
+          matInput
+          placeholder="Name/Flavor"
+          name="name"
+        />
       </mat-form-field>
       <mat-form-field class="example-full-width">
         <input
-          [(ngModel)]="value"
+          [ngModel]="this.listManager.drinkToEdit.from"
+          matInput
+          placeholder="From"
+          name="from"
+        />
+      </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <input
+          [ngModel]="this.listManager.drinkToEdit.price"
           matInput
           placeholder="Price"
           name="price"
@@ -27,10 +34,18 @@
   </form>
 
   <button mat-raised-button color="primary" form="ngForm" type="submit">
-    Primary
+    {{ this.listManager.editing ? 'Update' : 'Submit' }}
+  </button>
+  <button
+    *ngIf="this.listManager.editing"
+    (click)="this.listManager.editing = false; formRef.reset()"
+    mat-raised-button
+    color="danger"
+  >
+    Cancel
   </button>
 
-  <app-drinks-list [drinks]="drinks"></app-drinks-list>
+  <app-drinks-list></app-drinks-list>
 </div>
 <ul *ngFor="let follower of (data | async)">
   <li>{{ follower.name }} {{ follower.id }}</li>
