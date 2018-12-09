@@ -1,3 +1,48 @@
 table {
   width: 100%;
 }
+
+.mobile-label {
+  display: none;
+}
+
+@media (max-width: 500px) {
+  .mobile-label {
+    width: 100px;
+    display: inline-block;
+    font-weight: bold;
+  }
+
+  .mat-header-row {
+    display: none;
+  }
+  .mat-row {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 24px 5px 24px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    height: 100%;
+  }
+
+  .action-btns {
+    display: inline;
+    position: relative;
+    button:first-child {
+      right: 9px;
+    }
+    button:nth-child(2) {
+      right: 22px;
+    }
+  }
+  td.mat-cell {
+    border: none;
+    &:first-of-type {
+      padding: 0;
+    }
+    &:last-of-type {
+      position: relative;
+      bottom: 5px;
+    }
+  }
+}

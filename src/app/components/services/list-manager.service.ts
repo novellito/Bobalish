@@ -6,7 +6,9 @@ import { MatTableDataSource } from '@angular/material';
   providedIn: 'root'
 })
 export class ListManagerService {
-  drinks: Drink[] = [];
+  drinks: Drink[] = [{ name: 'trap', from: 'boolean', price: 333 }];
+
+  // drinks: Drink[] = [];
   data = new MatTableDataSource<Drink>(this.drinks);
   drinkToEdit: Drink = { name: '', from: '', price: null };
   editing: Boolean = false;
