@@ -1,7 +1,7 @@
 <div class="container">
   <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
     <div class="user-form">
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="input-fields">
         <input
           [ngModel]="this.listManager.drinkToEdit.name"
           matInput
@@ -9,7 +9,7 @@
           name="name"
         />
       </mat-form-field>
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="input-fields">
         <input
           [ngModel]="this.listManager.drinkToEdit.from"
           matInput
@@ -17,7 +17,7 @@
           name="from"
         />
       </mat-form-field>
-      <mat-form-field class="example-full-width">
+      <mat-form-field class="input-fields">
         <input
           [ngModel]="this.listManager.drinkToEdit.price"
           matInput
@@ -33,19 +33,26 @@
     </div>
   </form>
 
-  <button mat-raised-button color="primary" form="ngForm" type="submit">
+  <button
+    [disabled]="!formRef.value.name || !formRef.value.from"
+    mat-raised-button
+    color="primary"
+    form="ngForm"
+    type="submit"
+  >
     {{ this.listManager.editing ? 'Update' : 'Submit' }}
   </button>
   <button
     *ngIf="this.listManager.editing"
     (click)="this.listManager.editing = false; formRef.reset()"
     mat-raised-button
-    color="danger"
+    color="warn"
   >
     Cancel
   </button>
 
   <app-drinks-list></app-drinks-list>
+  <!-- <app-drinks-list [drinks]="drinks"></app-drinks-list> OLD CODE -->
 </div>
 <ul *ngFor="let follower of (data | async)">
   <li>{{ follower.name }} {{ follower.id }}</li>

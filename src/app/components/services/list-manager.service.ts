@@ -14,17 +14,17 @@ export class ListManagerService {
 
   constructor() {}
 
+  // Method to handle adding/ updating drinks
   addItem({ name, from, price }: any) {
+    // Set the drink & reset the trackers
     if (this.editing) {
       this.drinks[this.editIndex] = { name, from, price };
       this.editIndex = null;
       this.editing = false;
-      // reset edit index
     } else {
       this.drinks.push({ name, from, price });
     }
-    this.data.filter = '';
-    console.log(this.drinks);
+    this.data.filter = ''; // Used to update the table
   }
 
   deleteItem(index: number) {
@@ -32,10 +32,12 @@ export class ListManagerService {
     this.data.filter = '';
   }
 
+  // When item is being edited - retrive the item
+  // set the index and flip the boolean flag
   editItem(index: number) {
     this.drinkToEdit = this.drinks[index];
     this.editIndex = index;
     this.editing = true;
-    console.log(index);
+    console.log(this.drinkToEdit);
   }
 }

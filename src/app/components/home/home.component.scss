@@ -3,15 +3,9 @@
 }
 .container {
   @include container(50px);
-  //   padding: 50px;
 }
 
-.example-form {
-  //   min-width: 150px;
-  //   max-width: 500px;
-}
-
-.example-full-width {
+.input-fields {
   width: 100%;
 }
 
