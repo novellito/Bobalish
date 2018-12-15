@@ -1,5 +1,9 @@
 # source: http://localhost:4466
-# timestamp: Sat Nov 03 2018 23:02:13 GMT-0400 (Eastern Daylight Time)
+# timestamp: Fri Dec 14 2018 23:21:37 GMT-0500 (Eastern Standard Time)
+
+type AggregateDrink {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
@@ -8,6 +12,303 @@ type AggregateUser {
 type BatchPayload {
   """The number of nodes that have been affected by the Batch operation."""
   count: Long!
+}
+
+type Drink implements Node {
+  id: ID!
+  name: String!
+  from: String!
+  price: Float
+  creator: User!
+}
+
+"""A connection to a list of items."""
+type DrinkConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DrinkEdge]!
+  aggregate: AggregateDrink!
+}
+
+input DrinkCreateInput {
+  name: String!
+  from: String!
+  price: Float
+  creator: UserCreateOneWithoutDrinksInput!
+}
+
+input DrinkCreateManyWithoutCreatorInput {
+  create: [DrinkCreateWithoutCreatorInput!]
+  connect: [DrinkWhereUniqueInput!]
+}
+
+input DrinkCreateWithoutCreatorInput {
+  name: String!
+  from: String!
+  price: Float
+}
+
+"""An edge in a connection."""
+type DrinkEdge {
+  """The item at the end of the edge."""
+  node: Drink!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum DrinkOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  from_ASC
+  from_DESC
+  price_ASC
+  price_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type DrinkPreviousValues {
+  id: ID!
+  name: String!
+  from: String!
+  price: Float
+}
+
+type DrinkSubscriptionPayload {
+  mutation: MutationType!
+  node: Drink
+  updatedFields: [String!]
+  previousValues: DrinkPreviousValues
+}
+
+input DrinkSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DrinkSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DrinkSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DrinkSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: DrinkWhereInput
+}
+
+input DrinkUpdateInput {
+  name: String
+  from: String
+  price: Float
+  creator: UserUpdateOneRequiredWithoutDrinksInput
+}
+
+input DrinkUpdateManyWithoutCreatorInput {
+  create: [DrinkCreateWithoutCreatorInput!]
+  connect: [DrinkWhereUniqueInput!]
+  disconnect: [DrinkWhereUniqueInput!]
+  delete: [DrinkWhereUniqueInput!]
+  update: [DrinkUpdateWithWhereUniqueWithoutCreatorInput!]
+  upsert: [DrinkUpsertWithWhereUniqueWithoutCreatorInput!]
+}
+
+input DrinkUpdateWithoutCreatorDataInput {
+  name: String
+  from: String
+  price: Float
+}
+
+input DrinkUpdateWithWhereUniqueWithoutCreatorInput {
+  where: DrinkWhereUniqueInput!
+  data: DrinkUpdateWithoutCreatorDataInput!
+}
+
+input DrinkUpsertWithWhereUniqueWithoutCreatorInput {
+  where: DrinkWhereUniqueInput!
+  update: DrinkUpdateWithoutCreatorDataInput!
+  create: DrinkCreateWithoutCreatorInput!
+}
+
+input DrinkWhereInput {
+  """Logical AND on all given filters."""
+  AND: [DrinkWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [DrinkWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [DrinkWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  from: String
+
+  """All values that are not equal to given value."""
+  from_not: String
+
+  """All values that are contained in given list."""
+  from_in: [String!]
+
+  """All values that are not contained in given list."""
+  from_not_in: [String!]
+
+  """All values less than the given value."""
+  from_lt: String
+
+  """All values less than or equal the given value."""
+  from_lte: String
+
+  """All values greater than the given value."""
+  from_gt: String
+
+  """All values greater than or equal the given value."""
+  from_gte: String
+
+  """All values containing the given string."""
+  from_contains: String
+
+  """All values not containing the given string."""
+  from_not_contains: String
+
+  """All values starting with the given string."""
+  from_starts_with: String
+
+  """All values not starting with the given string."""
+  from_not_starts_with: String
+
+  """All values ending with the given string."""
+  from_ends_with: String
+
+  """All values not ending with the given string."""
+  from_not_ends_with: String
+  price: Float
+
+  """All values that are not equal to given value."""
+  price_not: Float
+
+  """All values that are contained in given list."""
+  price_in: [Float!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Float!]
+
+  """All values less than the given value."""
+  price_lt: Float
+
+  """All values less than or equal the given value."""
+  price_lte: Float
+
+  """All values greater than the given value."""
+  price_gt: Float
+
+  """All values greater than or equal the given value."""
+  price_gte: Float
+  creator: UserWhereInput
+}
+
+input DrinkWhereUniqueInput {
+  id: ID
 }
 
 """Raw JSON value"""
@@ -21,11 +322,17 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createDrink(data: DrinkCreateInput!): Drink!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateDrink(data: DrinkUpdateInput!, where: DrinkWhereUniqueInput!): Drink
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteDrink(where: DrinkWhereUniqueInput!): Drink
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertDrink(where: DrinkWhereUniqueInput!, create: DrinkCreateInput!, update: DrinkUpdateInput!): Drink!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  updateManyDrinks(data: DrinkUpdateInput!, where: DrinkWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyDrinks(where: DrinkWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -62,8 +369,11 @@ enum PrismaDatabase {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  drinks(where: DrinkWhereInput, orderBy: DrinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Drink]!
   user(where: UserWhereUniqueInput!): User
+  drink(where: DrinkWhereUniqueInput!): Drink
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  drinksConnection(where: DrinkWhereInput, orderBy: DrinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DrinkConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -74,6 +384,7 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  drink(where: DrinkSubscriptionWhereInput): DrinkSubscriptionPayload
 }
 
 type User implements Node {
@@ -81,6 +392,7 @@ type User implements Node {
   name: String!
   email: String!
   password: String!
+  drinks(where: DrinkWhereInput, orderBy: DrinkOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Drink!]
 }
 
 """A connection to a list of items."""
@@ -94,6 +406,18 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  name: String!
+  email: String!
+  password: String!
+  drinks: DrinkCreateManyWithoutCreatorInput
+}
+
+input UserCreateOneWithoutDrinksInput {
+  create: UserCreateWithoutDrinksInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutDrinksInput {
   name: String!
   email: String!
   password: String!
@@ -173,6 +497,25 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
+  drinks: DrinkUpdateManyWithoutCreatorInput
+}
+
+input UserUpdateOneRequiredWithoutDrinksInput {
+  create: UserCreateWithoutDrinksInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutDrinksDataInput
+  upsert: UserUpsertWithoutDrinksInput
+}
+
+input UserUpdateWithoutDrinksDataInput {
+  name: String
+  email: String
+  password: String
+}
+
+input UserUpsertWithoutDrinksInput {
+  update: UserUpdateWithoutDrinksDataInput!
+  create: UserCreateWithoutDrinksInput!
 }
 
 input UserWhereInput {
@@ -344,6 +687,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  drinks_every: DrinkWhereInput
+  drinks_some: DrinkWhereInput
+  drinks_none: DrinkWhereInput
 }
 
 input UserWhereUniqueInput {

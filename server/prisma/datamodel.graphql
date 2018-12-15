@@ -3,4 +3,12 @@ type User {
   name: String!
   email: String! @unique
   password: String!
+  drinks: [Drink!]!
+}
+type Drink {
+  id: ID! @unique
+  name: String!
+  from: String!
+  price: Float
+  creator: User!
 }

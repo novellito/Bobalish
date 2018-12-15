@@ -1,54 +1,91 @@
 # import UserOrderByInput from './generated/prisma.graphql'
+# import DrinkOrderByInput from './generated/prisma.graphql'
 
 type Query {
-    users(query: String, first: Int, skip: Int, after: String, orderBy: UserOrderByInput): [User!]!
-    me: User!
+  users(
+    query: String
+    first: Int
+    skip: Int
+    after: String
+    orderBy: UserOrderByInput
+  ): [User!]!
+  drinks(
+    query: String
+    first: Int
+    skip: Int
+    after: String
+    orderBy: DrinkOrderByInput
+  ): [Drink!]!
+  me: User!
 }
 
 type Mutation {
-    createUser(data: CreateUserInput!): AuthPayload!
-    login(data: LoginUserInput!): AuthPayload!
-    deleteUser: User!
-    updateUser(data: UpdateUserInput!): User!
+  createUser(data: CreateUserInput!): AuthPayload!
+  createDrink(data: CreateDrinkInput!): Drink!
+  updateDrink(data: UpdateDrinkInput!): Drink!
+  login(data: LoginUserInput!): AuthPayload!
+  deleteUser: User!
+  updateUser(data: UpdateUserInput!): User!
+  deleteDrink(id: String!): Drink!
 }
 
-# type Subscription {
+# type Subscription
 
 # }
 
 type AuthPayload {
-    token: String!
-    user: User!
+  token: String!
+  user: User!
 }
 
 input CreateUserInput {
-    name: String!
-    email: String!
-    password: String!
+  name: String!
+  email: String!
+  password: String!
+}
+input CreateDrinkInput {
+  name: String!
+  from: String!
+  price: Float
+}
+input UpdateDrinkInput {
+  id: String!
+  name: String!
+  from: String!
+  price: Float
 }
 
 input LoginUserInput {
-    email: String!
-    password: String!
+  email: String!
+  password: String!
 }
 
 input UpdateUserInput {
-    name: String
-    email: String
-    password: String
+  name: String
+  email: String
+  password: String
 }
 
 type User {
-    id: ID!
-    name: String!
-    email: String
-    password: String!
-    updatedAt: String!
-    createdAt: String!
+  id: ID!
+  name: String!
+  email: String
+  password: String!
+  updatedAt: String!
+  createdAt: String!
+  drinks: [Drink!]!
+}
+
+type Drink {
+  id: ID!
+  name: String!
+  from: String!
+  price: Float
+  creator: User!
 }
 
 enum MutationType {
-    CREATED
-    UPDATED
-    DELETED
+  CREATED
+  UPDATED
+  DELETED
 }
