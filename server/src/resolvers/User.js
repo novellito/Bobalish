@@ -5,15 +5,23 @@ const User = {
     fragment: 'fragment userId on User { id }',
     resolve(parent, args, { request }, info) {
       const userId = getUserId(request, false);
-      //   console.log(parent);
-      console.log('email');
-      //   console.log(request);
-      //   console.log('id ', userId);s
       if (userId && userId === parent.id) {
         return parent.email;
       } else {
         return null;
       }
+    }
+  },
+  drinks: {
+    fragment: 'fragment drinks on User {id }',
+    resolve(parent, args, { prisma }, info) {
+      return prisma.query.drinks({
+        where: {
+          creator: {
+            id: parent.id
+          }
+        }
+      });
     }
   }
 };

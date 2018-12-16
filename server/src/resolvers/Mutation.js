@@ -5,28 +5,24 @@ import hashPassword from '../utils/hashPassword';
 
 const Mutation = {
   async createDrink(parent, args, { prisma, request }, info) {
-    const userId = getUserId(request);
-    console.log('userid', userId);
     const user = await prisma.query.user({
       where: {
-        id: userId
+        id: getUserId(request)
       }
     });
 
     if (!user) {
       throw new Error('User not found');
     }
-    let drink = await prisma.mutation.createDrink({
-      data: {
-        ...args.data,
-        creator: { connect: { id: user.id, email: user.email } }
-      }
-    });
-    drink = {
-      ...drink,
-      creator: user
-    };
-    return drink;
+    return prisma.mutation.createDrink(
+      {
+        data: {
+          ...args.data,
+          creator: { connect: { id: user.id, email: user.email } }
+        }
+      },
+      info
+    );
   },
   async createUser(parent, args, { prisma }, info) {
     const password = await hashPassword(args.data.password);
@@ -65,29 +61,34 @@ const Mutation = {
     };
   },
   async deleteUser(parent, args, { prisma, request }, info) {
-    const userId = getUserId(request);
-
     return prisma.mutation.deleteUser(
       {
         where: {
-          id: userId
+          id: getUserId(request)
         }
       },
       info
     );
   },
   async deleteDrink(parent, args, { prisma, request }, info) {
-    // const userId = getUserId(request);
+    const exists = await prisma.exists.Drink({
+      id: args.id,
+      creator: {
+        id: getUserId(request)
+      }
+    });
 
-    return prisma.mutation.deleteDrink(
-      {
-        where: {
-          id: args.id
-          //   id: userId
-        }
-      },
-      info
-    );
+    if (!exists) {
+      throw new Error('User with given drink not found!');
+    }
+
+    const drink = await prisma.mutation.deleteDrink({
+      where: {
+        id: args.id
+      }
+    });
+
+    return drink;
   },
   async updateUser(parent, args, { prisma, request }, info) {
     const userId = getUserId(request);
@@ -107,11 +108,6 @@ const Mutation = {
     );
   },
   async updateDrink(parent, args, { prisma, request }, info) {
-    // const userId = getUserId(request);
-
-    // if (typeof args.data.password === 'string') {
-    // args.data.password = await hashPassword(args.data.password);
-    // }
     const data = {
       name: args.data.name,
       from: args.data.from,

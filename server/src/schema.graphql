@@ -17,6 +17,7 @@ type Query {
     orderBy: DrinkOrderByInput
   ): [Drink!]!
   me: User!
+  drink(id: ID!): Drink!
 }
 
 type Mutation {
@@ -26,12 +27,8 @@ type Mutation {
   login(data: LoginUserInput!): AuthPayload!
   deleteUser: User!
   updateUser(data: UpdateUserInput!): User!
-  deleteDrink(id: String!): Drink!
+  deleteDrink(id: ID!): Drink!
 }
-
-# type Subscription
-
-# }
 
 type AuthPayload {
   token: String!

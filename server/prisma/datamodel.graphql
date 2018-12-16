@@ -3,12 +3,12 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  drinks: [Drink!]!
+  drinks: [Drink!]! @relation(name: "DrinkToUser", onDelete: CASCADE)
 }
 type Drink {
   id: ID! @unique
   name: String!
   from: String!
   price: Float
-  creator: User!
+  creator: User! @relation(name: "DrinkToUser", onDelete: SET_NULL)
 }
