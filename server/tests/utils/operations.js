@@ -48,5 +48,26 @@ const createDrink = gql`
     }
   }
 `;
+const updateDrink = gql`
+  mutation($data: UpdateDrinkInput!) {
+    updateDrink(data: $data) {
+      id
+      name
+      from
+      price
+    }
+  }
+`;
 
-export { createUser, login, getProfile, createDrink };
+const deleteDrink = gql`
+  mutation($id: ID!) {
+    deleteDrink(id: $id) {
+      id
+      name
+      from
+      price
+    }
+  }
+`;
+
+export { createUser, login, getProfile, createDrink, updateDrink, deleteDrink };

@@ -1,13 +1,12 @@
 import 'cross-fetch/polyfill';
-import prisma from '../src/prisma';
 import seedDatabase, { testUser } from './utils/seedDatabase';
 import getClient from './utils/getClient';
-import { createDrink } from './utils/operations';
+import prisma from '../src/prisma';
+import { createDrink, updateDrink, deleteDrink } from './utils/operations';
 
-const client = getClient(testUser.jwt);
 beforeEach(seedDatabase);
 
-test('Should create a new drink for userOne', async () => {
+test('Should create a new drink for test user', async () => {
   const client = getClient(testUser.jwt);
   const variables = {
     data: {
@@ -26,17 +25,40 @@ test('Should create a new drink for userOne', async () => {
   expect(data.createDrink.creator.drinks.length).toBe(2);
 });
 
-// test('Should update a drink', async () => {
-//   //   const variables = {
-//   //     data: {
-//   //       name: 'Andrew',
-//   //       email: 'andrew@example.com',
-//   //       password: 'pass'
-//   //     }
-//   //   };
-//   //   await expect(
-//   //     client.mutate({ mutation: createUser, variables })
-//   //   ).rejects.toThrow();
-// });
+test('Should update a drink', async () => {
+  const client = getClient(testUser.jwt);
+  const variables = {
+    data: {
+      id: testUser.drinks[0].id,
+      name: 'Honeydew',
+      from: 'gong cha',
+      price: 4.29
+    }
+  };
+  const {
+    data: { updateDrink: drink }
+  } = await client.mutate({
+    mutation: updateDrink,
+    variables
+  });
 
-// test('Should delete a drink', async () => {});
+  expect(drink.name).toEqual(variables.data.name);
+  expect(drink.from).toEqual(variables.data.from);
+  expect(drink.price).toEqual(variables.data.price);
+});
+
+test('Should delete a drink', async () => {
+  const client = getClient(testUser.jwt);
+
+  const variables = {
+    id: testUser.drinks[0].id
+  };
+
+  await client.mutate({
+    mutation: deleteDrink,
+    variables
+  });
+
+  const exists = await prisma.exists.Drink({ id: testUser.drinks[0].id });
+  expect(exists).toBe(false);
+});
