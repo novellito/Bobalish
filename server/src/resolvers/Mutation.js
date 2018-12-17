@@ -4,26 +4,6 @@ import generateToken from '../utils/generateToken';
 import hashPassword from '../utils/hashPassword';
 
 const Mutation = {
-  async createDrink(parent, args, { prisma, request }, info) {
-    const user = await prisma.query.user({
-      where: {
-        id: getUserId(request)
-      }
-    });
-
-    if (!user) {
-      throw new Error('User not found');
-    }
-    return prisma.mutation.createDrink(
-      {
-        data: {
-          ...args.data,
-          creator: { connect: { id: user.id, email: user.email } }
-        }
-      },
-      info
-    );
-  },
   async createUser(parent, args, { prisma }, info) {
     const password = await hashPassword(args.data.password);
     const user = await prisma.mutation.createUser({
@@ -37,6 +17,23 @@ const Mutation = {
       user,
       token: generateToken(user.id)
     };
+  },
+  async updateUser(parent, args, { prisma, request }, info) {
+    const userId = getUserId(request);
+
+    if (typeof args.data.password === 'string') {
+      args.data.password = await hashPassword(args.data.password);
+    }
+
+    return prisma.mutation.updateUser(
+      {
+        where: {
+          id: userId
+        },
+        data: args.data
+      },
+      info
+    );
   },
   async login(parent, args, { prisma }, info) {
     const user = await prisma.query.user({
@@ -70,6 +67,53 @@ const Mutation = {
       info
     );
   },
+  async createDrink(parent, args, { prisma, request }, info) {
+    const user = await prisma.query.user({
+      where: {
+        id: getUserId(request)
+      }
+    });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return prisma.mutation.createDrink(
+      {
+        data: {
+          ...args.data,
+          creator: { connect: { id: user.id } }
+        }
+      },
+      info
+    );
+  },
+  async updateDrink(parent, args, { prisma, request }, info) {
+    const exists = await prisma.exists.Drink({
+      id: args.id,
+      creator: {
+        id: getUserId(request)
+      }
+    });
+
+    if (!exists) {
+      throw new Error('User with given drink not found!');
+    }
+
+    const data = {
+      name: args.data.name,
+      from: args.data.from,
+      price: args.data.price
+    };
+    return prisma.mutation.updateDrink(
+      {
+        where: {
+          id: args.data.id
+        },
+        data: data
+      },
+      info
+    );
+  },
   async deleteDrink(parent, args, { prisma, request }, info) {
     const exists = await prisma.exists.Drink({
       id: args.id,
@@ -89,39 +133,6 @@ const Mutation = {
     });
 
     return drink;
-  },
-  async updateUser(parent, args, { prisma, request }, info) {
-    const userId = getUserId(request);
-
-    if (typeof args.data.password === 'string') {
-      args.data.password = await hashPassword(args.data.password);
-    }
-
-    return prisma.mutation.updateUser(
-      {
-        where: {
-          id: userId
-        },
-        data: args.data
-      },
-      info
-    );
-  },
-  async updateDrink(parent, args, { prisma, request }, info) {
-    const data = {
-      name: args.data.name,
-      from: args.data.from,
-      price: args.data.price
-    };
-    return prisma.mutation.updateDrink(
-      {
-        where: {
-          id: args.data.id
-        },
-        data: data
-      },
-      info
-    );
   }
 };
 
