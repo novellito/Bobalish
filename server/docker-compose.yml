@@ -28,5 +28,13 @@ services:
       POSTGRES_PASSWORD: prisma
     volumes:
       - postgres:/var/lib/postgresql/data
+  server:
+    build: .
+    restart: always
+    volumes:
+      - /app/node_modules
+      - .:/app
+    ports:
+      - '4000:4000'
 volumes:
-  ? postgres
+  postgres:
