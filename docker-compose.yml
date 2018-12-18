@@ -18,6 +18,13 @@ services:
       - ./server:/app
     ports:
       - '4000:4000'
+  # tests:
+  #   build:
+  #     context: server
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./server:/app
+  #   command: ['npm', 'run', 'test']
   prisma:
     image: prismagraphql/prisma:1.19
     restart: always
