@@ -2,6 +2,7 @@ version: '3'
 services:
   client:
     build:
+      dockerfile: Dockerfile.dev
       context: client
     restart: always
     ports:
@@ -9,8 +10,9 @@ services:
     volumes:
       - /app/node_modules/
       - ./client:/app
-  server:
+  api:
     build:
+      dockerfile: Dockerfile.dev
       context: server
     restart: always
     volumes:
@@ -18,13 +20,17 @@ services:
       - ./server:/app
     ports:
       - '4000:4000'
-  # tests:
-  #   build:
-  #     context: server
-  #   volumes:
-  #     - /app/node_modules
-  #     - ./server:/app
-  #   command: ['npm', 'run', 'test']
+    env_file:
+      - ./config/dev/api.env
+  tests:
+    build:
+      context: server
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    env_file:
+      - ./config/dev/test.env
+    command: ['npm', 'run', 'test']
   prisma:
     image: prismagraphql/prisma:1.19
     restart: always
