@@ -14,7 +14,8 @@ export function createApollo(httpLink: HttpLink) {
   const auth = setContext((op, ctx) => ({
     headers: ctx.headers.append(
       'Authorization',
-      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJkZWZhdWx0QGRlZmF1bHQiLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTQxMzAxMDA3LCJleHAiOjE1NDE5MDU4MDd9.aFvPbYZuK-NTMIxqsi8PfaHbxjSU1FJkX4EUWdF0arc'
+      'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjanB3MWtkMHUwMDA2MGI2MnpxdWZmeW5yIiwiaWF0IjoxNTQ1Mjc2MjIzLCJleHAiOjE1NDU4ODEwMjN9.fPvIsLV-qspdQlr67dVf0-thVPJexqKqYafoRFrkLrA'
+      // 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7InNlcnZpY2UiOiJkZWZhdWx0QGRlZmF1bHQiLCJyb2xlcyI6WyJhZG1pbiJdfSwiaWF0IjoxNTQxMzAxMDA3LCJleHAiOjE1NDE5MDU4MDd9.aFvPbYZuK-NTMIxqsi8PfaHbxjSU1FJkX4EUWdF0arc'
     )
   }));
   return {

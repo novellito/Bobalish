@@ -57,3 +57,13 @@
 <ul *ngFor="let follower of (data | async)">
   <li>{{ follower.name }} {{ follower.id }}</li>
 </ul>
+<ul *ngFor="let follower of (data | async)">
+  <li>{{ follower.name }} {{ follower.from }} {{ follower.price }}</li>
+</ul>
+
+<h1>{{ data | async }}</h1>
+<!--
+  <ul *ngFor="let drink of (data[0].drinks | async)">
+    <li>{{ drink.name }} {{ drink.from.id }}</li>
+  </ul>
+-->

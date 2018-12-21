@@ -10,5 +10,5 @@ export type Drink = {
 
 export type Query = {
   users: User[];
-  drink: Drink[];
+  drinks: Drink[];
 };
