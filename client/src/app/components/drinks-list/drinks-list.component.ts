@@ -36,17 +36,12 @@ export class DrinksListComponent implements OnInit {
         query: query
       })
       .valueChanges.subscribe(({ data }) => {
-        console.log(data);
         this.listManager.data = new MatTableDataSource(data.drinks); // Add to datasource for table
         this.listManager.drinks = data.drinks;
         return data.drinks;
       });
   }
 
-  edit(id: string) {
-    console.log(id);
-    this.listManager.editing = true;
-  }
   delete(id: string) {
     this.listManager.deleteFromServer(id).subscribe(({ data }) => {
       this.listManager.deleteDrink(id);

@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
         .updateInServer({ name, from, price })
         .subscribe(({ data: { updateDrink: drink } }) => {
           console.log(drink);
-          this.listManager.createDrink({
+          this.listManager.modifyDrink({
             id: drink.id,
             name: drink.name,
             from: drink.from,
@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
       this.listManager
         .createInServer({ name, from, price })
         .subscribe(({ data: { createDrink: drink } }) => {
-          this.listManager.createDrink({
+          this.listManager.modifyDrink({
             id: drink.id,
             name: drink.name,
             from: drink.from,

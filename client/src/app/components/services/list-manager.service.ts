@@ -51,14 +51,13 @@ export class ListManagerService {
   drinks: Drink[] = [];
   data = new MatTableDataSource<Drink>(this.drinks);
   drinkToEdit: Drink = { name: '', from: '', price: null, id: '' };
-  // drinkToEditId:string = null
   editing: Boolean = false;
   editIndex: number = null;
 
   constructor(private apollo: Apollo) {}
 
   // Method to handle adding/ updating drinks
-  createDrink({ id, name, from, price }: Drink) {
+  modifyDrink({ id, name, from, price }: Drink) {
     // Set the drink & reset the trackers
     if (this.editing) {
       this.drinks[this.editIndex] = { id, name, from, price };
@@ -128,7 +127,7 @@ export class ListManagerService {
   }
 
   // When item is being edited - retrive the item
-  // set the index and flip the boolean flag
+  // set the index and flip the boolean flag to true
   editItem(index: number) {
     this.drinkToEdit = this.drinks[index];
     this.editIndex = index;
