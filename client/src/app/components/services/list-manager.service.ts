@@ -22,34 +22,54 @@ const createDrink = gql`
     }
   }
 `;
+
+const deleteDrink = gql`
+  mutation($id: ID!) {
+    deleteDrink(id: $id) {
+      id
+      name
+      from
+      price
+    }
+  }
+`;
+
 @Injectable({
   providedIn: 'root'
 })
 export class ListManagerService {
   drinks: Drink[] = [];
   data = new MatTableDataSource<Drink>(this.drinks);
-  drinkToEdit: Drink = { name: '', from: '', price: null };
+  drinkToEdit: Drink = { name: '', from: '', price: null, id: '' };
   editing: Boolean = false;
   editIndex: number = null;
 
   constructor(private apollo: Apollo) {}
 
   // Method to handle adding/ updating drinks
-  addItem({ name, from, price }: Drink) {
+  createDrink({ id, name, from, price }: Drink) {
     // Set the drink & reset the trackers
     if (this.editing) {
-      this.drinks[this.editIndex] = { name, from, price };
+      this.drinks[this.editIndex] = { id, name, from, price };
       this.data = new MatTableDataSource<Drink>(this.drinks);
       this.editIndex = null;
       this.editing = false;
     } else {
       // add the new drink to the data source
-      this.drinks = [...this.drinks, { name, from, price }];
+      this.drinks = [...this.drinks, { id, name, from, price }];
       this.data = new MatTableDataSource<Drink>(this.drinks);
     }
   }
 
-  createDrink({ name, from, price }: Drink) {
+  createInServer({
+    name,
+    from,
+    price
+  }: {
+    name: string;
+    from: string;
+    price: number;
+  }) {
     return this.apollo.mutate({
       mutation: createDrink,
       variables: {
@@ -62,9 +82,16 @@ export class ListManagerService {
     });
   }
 
-  deleteItem(index: number) {
-    this.drinks = this.drinks.filter(elem => elem !== this.drinks[index]);
+  deleteDrink(id: string) {
+    this.drinks = this.drinks.filter(elem => elem.id !== id);
     this.data = new MatTableDataSource<Drink>(this.drinks);
+  }
+
+  deleteFromServer(id: string) {
+    return this.apollo.mutate({
+      mutation: deleteDrink,
+      variables: { id }
+    });
   }
 
   // When item is being edited - retrive the item

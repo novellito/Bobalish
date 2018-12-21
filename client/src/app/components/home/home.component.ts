@@ -69,11 +69,15 @@ export class HomeComponent implements OnInit {
 
   handleSubmit(form: NgForm) {
     const { name, from, price } = form.value;
-    this.listManager.addItem({ name, from, price });
     this.listManager
-      .createDrink({ name, from, price })
-      .subscribe(({ data }) => {
-        console.log(data);
+      .createInServer({ name, from, price })
+      .subscribe(({ data: { createDrink: drink } }) => {
+        this.listManager.createDrink({
+          id: drink.id,
+          name: drink.name,
+          from: drink.from,
+          price: drink.price
+        });
       });
     // reset the errors of all the controls
     form.reset();

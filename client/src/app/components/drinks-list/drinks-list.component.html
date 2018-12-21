@@ -39,11 +39,7 @@
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button
-          mat-icon-button
-          color="accent"
-          (click)="this.listManager.deleteItem(i)"
-        >
+        <button mat-icon-button color="accent" (click)="delete(row.id)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </div>
