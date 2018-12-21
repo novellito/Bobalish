@@ -43,9 +43,10 @@ export class DrinksListComponent implements OnInit {
       });
   }
 
-  // edit(index: number) {
-  //   console.log(index);
-  // }
+  edit(id: string) {
+    console.log(id);
+    this.listManager.editing = true;
+  }
   delete(id: string) {
     this.listManager.deleteFromServer(id).subscribe(({ data }) => {
       this.listManager.deleteDrink(id);

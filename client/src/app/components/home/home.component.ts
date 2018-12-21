@@ -33,11 +33,9 @@ const query = gql`
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
-  // providers: [ListManagerService]
 })
 export class HomeComponent implements OnInit {
   data: Observable<any[]>;
-  // data: Observable<User[]>;
   drinks: Drink[] = [];
   constructor(
     private apollo: Apollo,
@@ -69,17 +67,31 @@ export class HomeComponent implements OnInit {
 
   handleSubmit(form: NgForm) {
     const { name, from, price } = form.value;
-    this.listManager
-      .createInServer({ name, from, price })
-      .subscribe(({ data: { createDrink: drink } }) => {
-        this.listManager.createDrink({
-          id: drink.id,
-          name: drink.name,
-          from: drink.from,
-          price: drink.price
+    if (this.listManager.editing) {
+      this.listManager
+        .updateInServer({ name, from, price })
+        .subscribe(({ data: { updateDrink: drink } }) => {
+          console.log(drink);
+          this.listManager.createDrink({
+            id: drink.id,
+            name: drink.name,
+            from: drink.from,
+            price: drink.price
+          });
         });
-      });
-    // reset the errors of all the controls
+    } else {
+      this.listManager
+        .createInServer({ name, from, price })
+        .subscribe(({ data: { createDrink: drink } }) => {
+          this.listManager.createDrink({
+            id: drink.id,
+            name: drink.name,
+            from: drink.from,
+            price: drink.price
+          });
+        });
+      // reset the errors of all the controls
+    }
     form.reset();
   }
 }

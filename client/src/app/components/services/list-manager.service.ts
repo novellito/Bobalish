@@ -33,6 +33,16 @@ const deleteDrink = gql`
     }
   }
 `;
+const updateDrink = gql`
+  mutation($data: UpdateDrinkInput!) {
+    updateDrink(data: $data) {
+      id
+      name
+      from
+      price
+    }
+  }
+`;
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +51,7 @@ export class ListManagerService {
   drinks: Drink[] = [];
   data = new MatTableDataSource<Drink>(this.drinks);
   drinkToEdit: Drink = { name: '', from: '', price: null, id: '' };
+  // drinkToEditId:string = null
   editing: Boolean = false;
   editIndex: number = null;
 
@@ -91,6 +102,28 @@ export class ListManagerService {
     return this.apollo.mutate({
       mutation: deleteDrink,
       variables: { id }
+    });
+  }
+
+  updateInServer({
+    name,
+    from,
+    price
+  }: {
+    name: string;
+    from: string;
+    price: number;
+  }) {
+    return this.apollo.mutate({
+      mutation: updateDrink,
+      variables: {
+        data: {
+          id: this.drinkToEdit.id,
+          name,
+          from,
+          price
+        }
+      }
     });
   }
 
