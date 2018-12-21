@@ -1,50 +1,57 @@
-<table
-  mat-table
-  [dataSource]="this.listManager.data"
-  [class.isMobile]="isMobile"
-  class="mat-elevation-z8"
->
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name/Flavor</th>
-    <td mat-cell *matCellDef="let drink">
-      <span class="mobile-label">Name/Flavor</span>{{ drink.name }}
-    </td>
-  </ng-container>
+<div class="mat-elevation-z8">
+  <table
+    mat-table
+    [dataSource]="this.listManager.data"
+    [class.isMobile]="isMobile"
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name/Flavor</th>
+      <td mat-cell *matCellDef="let drink">
+        <span class="mobile-label">Name/Flavor</span>{{ drink.name }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="from">
-    <th mat-header-cell *matHeaderCellDef>From</th>
-    <td mat-cell *matCellDef="let drink">
-      <span class="mobile-label">From</span>{{ drink.from }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="from">
+      <th mat-header-cell *matHeaderCellDef>From</th>
+      <td mat-cell *matCellDef="let drink">
+        <span class="mobile-label">From</span>{{ drink.from }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="price">
-    <th mat-header-cell *matHeaderCellDef>Price</th>
-    <td mat-cell *matCellDef="let drink">
-      <span class="mobile-label">Price</span>$ {{ drink.price }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let drink">
+        <span class="mobile-label">Price</span>$ {{ drink.price }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
 
-    <td mat-cell *matCellDef="let row; let i = index">
-      <span class="mobile-label">Actions</span>
-      <div class="action-btns">
-        <button
-          mat-icon-button
-          color="accent"
-          (click)="this.listManager.editItem(i)"
-        >
-          <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
+      <td mat-cell *matCellDef="let row; let i = index">
+        <span class="mobile-label">Actions</span>
+        <div class="action-btns">
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="this.listManager.editItem(i)"
+          >
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
 
-        <button mat-icon-button color="accent" (click)="delete(row.id)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-      </div>
-    </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
+          <button mat-icon-button color="accent" (click)="delete(row.id)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

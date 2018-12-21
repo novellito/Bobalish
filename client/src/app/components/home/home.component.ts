@@ -6,15 +6,6 @@ import { Observable } from 'rxjs';
 import { User, Query, Drink } from './types';
 import { ListManagerService } from '../services/list-manager.service';
 import { NgForm } from '@angular/forms';
-const query = gql`
-  {
-    drinks {
-      name
-      from
-      price
-    }
-  }
-`;
 // const query = gql`
 //   {
 //     users {
@@ -65,6 +56,7 @@ export class HomeComponent implements OnInit {
     // console.log('wowser', this.data);
   }
 
+  // Either update the drink or create a new one
   handleSubmit(form: NgForm) {
     const { name, from, price } = form.value;
     if (this.listManager.editing) {

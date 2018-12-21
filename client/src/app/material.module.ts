@@ -6,7 +6,8 @@ import {
   MatCheckboxModule,
   MatInputModule,
   MatTableModule,
-  MatIconModule
+  MatIconModule,
+  MatPaginatorModule
 } from '@angular/material';
 
 @NgModule({
@@ -16,7 +17,8 @@ import {
     BrowserAnimationsModule,
     MatInputModule,
     MatTableModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule {}
