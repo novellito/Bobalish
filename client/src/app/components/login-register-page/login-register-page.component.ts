@@ -46,12 +46,23 @@ export class LoginRegisterPageComponent implements OnInit {
   }
 
   handleSubmit(form: NgForm) {
-    console.log(form);
-    this.auth.test();
-    const { name, email, password } = form.value;
-    this.auth.registerUser({ name, email, password }).subscribe(data => {
-      console.log(data);
-    });
-    console.log(name, email, password);
+    console.log(this.email, this.name, this.password);
+    if (this.currentRoute === '/register') {
+      this.auth
+        .registerUser({
+          name: this.name.value,
+          email: this.email.value,
+          password: this.password.value
+        })
+        .subscribe(({ data: { createUser: user } }) => {
+          //store token to localstorage and redirect to home
+          localStorage.setItem('token', user.token);
+          this.route.navigate(['/home']);
+          // console.log(data);
+        });
+    } else {
+      const { name, email, password } = form.value;
+      console.log({ name, email, password });
+    }
   }
 }
