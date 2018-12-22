@@ -5,11 +5,12 @@
         <div class="cred-fields">
           <h1>Login</h1>
           <mat-form-field class="input-fields">
-            <input matInput placeholder="Username/Email" name="name" />
+            <input matInput ngModel placeholder="Username/Email" name="name" />
           </mat-form-field>
           <mat-form-field class="input-fields">
             <input
               matInput
+              ngModel
               placeholder="Password"
               name="password"
               [type]="hide ? 'password' : 'text'"
@@ -37,28 +38,53 @@
         <div class="cred-fields">
           <h1>Register</h1>
           <mat-form-field class="input-fields">
-            <input matInput placeholder="Username" name="username" />
-          </mat-form-field>
-          <mat-form-field class="input-fields">
-            <input matInput placeholder="Email" name="email" />
+            <input
+              matInput
+              ngModel
+              placeholder="Username"
+              name="name"
+              [formControl]="name"
+              required
+            />
+            <mat-error *ngIf="name.invalid">{{
+              getNameErrorMessage()
+            }}</mat-error>
           </mat-form-field>
           <mat-form-field class="input-fields">
             <input
               matInput
+              ngModel
+              placeholder="Email"
+              name="email"
+              [formControl]="email"
+              required
+            />
+            <mat-error *ngIf="email.invalid">{{
+              getEmailErrorMessage()
+            }}</mat-error>
+          </mat-form-field>
+          <mat-form-field class="input-fields">
+            <input
+              matInput
+              ngModel
               placeholder="Password"
               name="password"
               [type]="hide ? 'password' : 'text'"
+              [formControl]="password"
+              required
             />
+            <mat-error *ngIf="password.invalid">{{
+              getPasswordErrorMessage()
+            }}</mat-error>
             <mat-icon class="eye" matSuffix (click)="hide = !hide">{{
               hide ? 'visibility_off' : 'visibility'
             }}</mat-icon>
           </mat-form-field>
           <div class="register-footer">
             <button
-              [disabled]=""
+              [disabled]="name.invalid || email.invalid || password.invalid"
               mat-raised-button
               color="primary"
-              form="ngForm"
               type="submit"
             >
               Register
