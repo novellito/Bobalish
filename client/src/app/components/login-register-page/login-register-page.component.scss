@@ -1,0 +1,26 @@
+.eye:hover {
+  cursor: pointer;
+}
+.input-fields {
+  width: 100%;
+}
+
+.container {
+  padding: 30px;
+}
+.cred-fields {
+  padding: 30px;
+  h1 {
+    margin-top: 0;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    padding: 100px;
+    width: 60%;
+    margin: 0 auto;
+  }
+  .cred-fields {
+    padding: 55px;
+  }
+}

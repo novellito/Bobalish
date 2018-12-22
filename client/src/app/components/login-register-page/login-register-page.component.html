@@ -1,0 +1,70 @@
+<div class="container">
+  <mat-card>
+    <div *ngIf="currentRoute === '/login'">
+      <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
+        <div class="cred-fields">
+          <h1>Login</h1>
+          <mat-form-field class="input-fields">
+            <input matInput placeholder="Username/Email" name="name" />
+          </mat-form-field>
+          <mat-form-field class="input-fields">
+            <input
+              matInput
+              placeholder="Password"
+              name="password"
+              [type]="hide ? 'password' : 'text'"
+            />
+            <mat-icon class="eye" matSuffix (click)="hide = !hide">{{
+              hide ? 'visibility_off' : 'visibility'
+            }}</mat-icon>
+          </mat-form-field>
+
+          <button
+            [disabled]=""
+            mat-raised-button
+            color="primary"
+            form="ngForm"
+            type="submit"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="currentRoute === '/register'">
+      <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
+        <div class="cred-fields">
+          <h1>Register</h1>
+          <mat-form-field class="input-fields">
+            <input matInput placeholder="Username" name="username" />
+          </mat-form-field>
+          <mat-form-field class="input-fields">
+            <input matInput placeholder="Email" name="email" />
+          </mat-form-field>
+          <mat-form-field class="input-fields">
+            <input
+              matInput
+              placeholder="Password"
+              name="password"
+              [type]="hide ? 'password' : 'text'"
+            />
+            <mat-icon class="eye" matSuffix (click)="hide = !hide">{{
+              hide ? 'visibility_off' : 'visibility'
+            }}</mat-icon>
+          </mat-form-field>
+
+          <button
+            [disabled]=""
+            mat-raised-button
+            color="primary"
+            form="ngForm"
+            type="submit"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

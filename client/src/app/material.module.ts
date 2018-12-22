@@ -7,7 +7,8 @@ import {
   MatInputModule,
   MatTableModule,
   MatIconModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatCardModule
 } from '@angular/material';
 
 @NgModule({
@@ -18,7 +19,8 @@ import {
     MatInputModule,
     MatTableModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule
   ]
 })
 export class MaterialModule {}
