@@ -22,7 +22,6 @@ export class LoginRegisterPageComponent implements OnInit {
 
   ngOnInit() {
     this.currentRoute = this.route.url;
-    console.log(this.currentRoute);
   }
   getEmailErrorMessage() {
     return this.email.hasError('required')

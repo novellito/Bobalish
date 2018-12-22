@@ -5,7 +5,13 @@
         <div class="cred-fields">
           <h1>Login</h1>
           <mat-form-field class="input-fields">
-            <input matInput ngModel placeholder="Username/Email" name="name" />
+            <input
+              matInput
+              ngModel
+              placeholder="Username/Email"
+              name="name"
+              #name
+            />
           </mat-form-field>
           <mat-form-field class="input-fields">
             <input
@@ -14,21 +20,24 @@
               placeholder="Password"
               name="password"
               [type]="hide ? 'password' : 'text'"
+              #password
             />
             <mat-icon class="eye" matSuffix (click)="hide = !hide">{{
               hide ? 'visibility_off' : 'visibility'
             }}</mat-icon>
           </mat-form-field>
-
-          <button
-            [disabled]=""
-            mat-raised-button
-            color="primary"
-            form="ngForm"
-            type="submit"
-          >
-            Login
-          </button>
+          <div class="card-footer">
+            <button
+              [disabled]="!name.value || !password.value"
+              mat-raised-button
+              color="primary"
+              form="ngForm"
+              type="submit"
+            >
+              Login
+            </button>
+            <a [routerLink]="['/register']">or register here</a>
+          </div>
         </div>
       </form>
     </div>
@@ -40,7 +49,6 @@
           <mat-form-field class="input-fields">
             <input
               matInput
-              ngModel
               placeholder="Username"
               name="name"
               [formControl]="name"
@@ -53,7 +61,6 @@
           <mat-form-field class="input-fields">
             <input
               matInput
-              ngModel
               placeholder="Email"
               name="email"
               [formControl]="email"
@@ -66,7 +73,6 @@
           <mat-form-field class="input-fields">
             <input
               matInput
-              ngModel
               placeholder="Password"
               name="password"
               [type]="hide ? 'password' : 'text'"
@@ -80,9 +86,9 @@
               hide ? 'visibility_off' : 'visibility'
             }}</mat-icon>
           </mat-form-field>
-          <div class="register-footer">
+          <div class="card-footer">
             <button
-              [disabled]="name.invalid || email.invalid || password.invalid"
+              disabled="name.invalid || email.invalid || password.invalid"
               mat-raised-button
               color="primary"
               type="submit"
