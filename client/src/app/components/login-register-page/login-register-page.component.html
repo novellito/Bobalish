@@ -53,18 +53,19 @@
               hide ? 'visibility_off' : 'visibility'
             }}</mat-icon>
           </mat-form-field>
+          <div class="register-footer">
+            <button
+              [disabled]=""
+              mat-raised-button
+              color="primary"
+              form="ngForm"
+              type="submit"
+            >
+              Register
+            </button>
 
-          <button
-            [disabled]=""
-            mat-raised-button
-            color="primary"
-            form="ngForm"
-            type="submit"
-          >
-            Register
-          </button>
-
-          <a [routerLink]="['/login']">or login here</a>
+            <a [routerLink]="['/login']">or login here</a>
+          </div>
         </div>
       </form>
     </div>
