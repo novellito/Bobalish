@@ -5,13 +5,7 @@
         <div class="cred-fields">
           <h1>Login</h1>
           <mat-form-field class="input-fields">
-            <input
-              matInput
-              ngModel
-              placeholder="Username/Email"
-              name="name"
-              #name
-            />
+            <input matInput ngModel placeholder="Email" name="email" #email />
           </mat-form-field>
           <mat-form-field class="input-fields">
             <input
@@ -28,7 +22,7 @@
           </mat-form-field>
           <div class="card-footer">
             <button
-              [disabled]="!name.value || !password.value"
+              [disabled]="!email.value || !password.value"
               mat-raised-button
               color="primary"
               form="ngForm"

@@ -1,59 +1,55 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { User, Query, Drink } from './types';
+import { Query, Drink } from './types';
 import { ListManagerService } from '../services/list-manager.service';
 import { NgForm } from '@angular/forms';
-// const query = gql`
-//   {
-//     users {
-//       name
-//       password
-//       id
-//       drinks {
-//         name
-//         from
-//         price
-//       }
-//     }
-//   }
-// `;
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+const getProfile = gql`
+  {
+    me {
+      id
+      name
+      email
+      drinks {
+        name
+        from
+        price
+        id
+      }
+    }
+  }
+`;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  data: Observable<any[]>;
-  drinks: Drink[] = [];
+  drinks: Drink[] = null;
   constructor(
+    private route: Router,
     private apollo: Apollo,
+    private auth: AuthService,
     private listManager: ListManagerService
   ) {}
 
   ngOnInit() {
-    // this.drinks = this.listManager.drinks;
-    // // this.listManager.drinks = this.apollo
-    // this.data = this.apollo
-    //   .watchQuery<Query>({
-    //     query: query
-    //   })
-    //   .valueChanges.pipe(
-    //     map(({ data }) => {
-    //       console.log(data);
-    //       // // console.log(data.users[0].drinks);
-    //       // this.listManager.drinks = data.users[0].drinks;
-    //       this.listManager.drinks = data.drinks;
-    //       this.listManager.data.filter = '';
-    //       console.log(this.listManager.drinks);
-    //       console.log(data.drinks);
-    //       return data.drinks;
-    //       // return data.users;
-    //     })
-    //   );
-    // console.log('wowser', this.data);
+    // check if valid token and set logged in status accordingly
+    this.apollo
+      .watchQuery<Query>({
+        query: getProfile
+      })
+      .valueChanges.subscribe(({ data: { me: body } }) => {
+        if (body) {
+          this.drinks = body.drinks;
+          this.auth.isLoggedIn = true;
+        } else {
+          this.route.navigate(['/login']);
+        }
+      });
   }
 
   // Either update the drink or create a new one
@@ -63,7 +59,6 @@ export class HomeComponent implements OnInit {
       this.listManager
         .updateInServer({ name, from, price })
         .subscribe(({ data: { updateDrink: drink } }) => {
-          console.log(drink);
           this.listManager.modifyDrink({
             id: drink.id,
             name: drink.name,
@@ -82,8 +77,14 @@ export class HomeComponent implements OnInit {
             price: drink.price
           });
         });
-      // reset the errors of all the controls
     }
     form.reset();
+  }
+
+  // Logout user & clear token
+  logout() {
+    localStorage.removeItem('token');
+    this.auth.isLoggedIn = false;
+    this.route.navigate(['/login']);
   }
 }

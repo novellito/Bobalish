@@ -1,4 +1,5 @@
 <div class="container">
+  <button mat-raised-button color="primary" (click)="logout()">Logout</button>
   <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
     <div class="user-form">
       <mat-form-field class="input-fields">
@@ -51,6 +52,5 @@
     Cancel
   </button>
 
-  <app-drinks-list></app-drinks-list>
-  <!-- <app-drinks-list [drinks]="drinks"></app-drinks-list> OLD CODE -->
+  <app-drinks-list *ngIf="drinks" [drinks]="drinks"></app-drinks-list>
 </div>

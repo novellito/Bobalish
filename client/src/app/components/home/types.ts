@@ -1,6 +1,8 @@
 export type User = {
   name: string;
+  email: string;
   id: number;
+  drinks: Drink[];
 };
 export type Drink = {
   name: string;
@@ -12,4 +14,5 @@ export type Drink = {
 export type Query = {
   users: User[];
   drinks: Drink[];
+  me: User;
 };

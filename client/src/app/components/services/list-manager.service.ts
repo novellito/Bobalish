@@ -1,56 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Drink } from '../../components/home/types';
 import { MatTableDataSource } from '@angular/material';
-import gql from 'graphql-tag';
 import { Apollo } from 'apollo-angular';
-const createDrink = gql`
-  mutation($data: CreateDrinkInput!) {
-    createDrink(data: $data) {
-      id
-      name
-      from
-      price
-      creator {
-        name
-        email
-        drinks {
-          name
-          from
-          price
-        }
-      }
-    }
-  }
-`;
-
-const deleteDrink = gql`
-  mutation($id: ID!) {
-    deleteDrink(id: $id) {
-      id
-      name
-      from
-      price
-    }
-  }
-`;
-const updateDrink = gql`
-  mutation($data: UpdateDrinkInput!) {
-    updateDrink(data: $data) {
-      id
-      name
-      from
-      price
-    }
-  }
-`;
-
+import { createDrink, deleteDrink, updateDrink } from './Mutations';
 @Injectable({
   providedIn: 'root'
 })
 export class ListManagerService {
   drinks: Drink[] = [];
   data = new MatTableDataSource<Drink>(this.drinks);
-  drinkToEdit: Drink = { name: '', from: '', price: null, id: '' };
+  drinkToEdit: Drink = { name: null, from: null, price: null, id: null };
   editing: Boolean = false;
   editIndex: number = null;
 
@@ -92,6 +51,7 @@ export class ListManagerService {
     });
   }
 
+  // Delete the drink from the ui
   deleteDrink(id: string) {
     this.drinks = this.drinks.filter(elem => elem.id !== id);
     this.data = new MatTableDataSource<Drink>(this.drinks);

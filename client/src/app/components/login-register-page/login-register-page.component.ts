@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import decode from 'jwt-decode';
 @Component({
   selector: 'app-login-register-page',
   templateUrl: './login-register-page.component.html',
@@ -21,6 +22,19 @@ export class LoginRegisterPageComponent implements OnInit {
   constructor(private route: Router, private auth: AuthService) {}
 
   ngOnInit() {
+    try {
+      const token = localStorage.getItem('token');
+      const decodedToken = decode(token);
+      if (decodedToken) {
+        // redirect user back home if they try to access
+        // these routes while already logged in
+        this.auth.isLoggedIn = true;
+        this.route.navigate(['/home']);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
     this.currentRoute = this.route.url;
   }
   getEmailErrorMessage() {
@@ -46,10 +60,9 @@ export class LoginRegisterPageComponent implements OnInit {
   }
 
   handleSubmit(form: NgForm) {
-    console.log(this.email, this.name, this.password);
     if (this.currentRoute === '/register') {
       this.auth
-        .registerUser({
+        .createUser({
           name: this.name.value,
           email: this.email.value,
           password: this.password.value
@@ -58,11 +71,17 @@ export class LoginRegisterPageComponent implements OnInit {
           //store token to localstorage and redirect to home
           localStorage.setItem('token', user.token);
           this.route.navigate(['/home']);
-          // console.log(data);
         });
     } else {
-      const { name, email, password } = form.value;
-      console.log({ name, email, password });
+      const { email, password } = form.value;
+      this.auth
+        .loginUser({ email, password })
+        .subscribe(({ data: { login: user } }) => {
+          if (user.token) {
+            localStorage.setItem('token', user.token);
+            this.route.navigate(['/home']);
+          }
+        });
     }
   }
 }
