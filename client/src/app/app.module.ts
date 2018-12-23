@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './modules/app-routing.module';
 import { AppComponent } from './app.component';
-import { GraphQLModule } from './graphql.module';
+import { GraphQLModule } from './modules/graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeModule } from './components/home.module';
 import { LoginRegisterModule } from './components/login-register.module';
