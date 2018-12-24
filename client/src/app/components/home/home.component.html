@@ -1,5 +1,7 @@
 <div class="container">
   <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+  <app-drinks-list *ngIf="drinks" [drinks]="drinks"></app-drinks-list>
+
   <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
     <div class="user-form">
       <mat-form-field class="input-fields">
@@ -52,7 +54,6 @@
     Cancel
   </button>
 
-  <app-drinks-list *ngIf="drinks" [drinks]="drinks"></app-drinks-list>
   <app-recommendations
     *ngIf="coordinates.latitude && coordinates.longitude"
     [coordinates]="coordinates"
@@ -93,6 +94,6 @@
   </mat-card>
 
   <div *ngIf="locationDenied">
-    You must allow access to geolocation to get recommendations
+    <h2>Please allow geolocation access to get recommendations</h2>
   </div>
 </div>
