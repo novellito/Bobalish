@@ -1,6 +1,26 @@
 import getUserId from '../utils/getUserId';
+import client from '../utils/yelp';
 
 const Query = {
+  async locations(parent, { data }, { prisma }, info) {
+    let jsonBody;
+
+    try {
+      ({ jsonBody } = await client.search({
+        term: 'boba',
+        location: data.location ? data.location : 'elmhurst, new york',
+        longitude: data.longitude,
+        latitude: data.latitude,
+        categories:
+          'Bubble Tea, Beverage Store, Restaurant, Coffee & Tea, Juice Bars & Smoothies, Cafes, Food',
+        limit: 10
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+
+    return jsonBody.businesses.map(elem => elem.name);
+  },
   users(parent, args, { prisma }, info) {
     const opArgs = {
       first: args.first,

@@ -29,6 +29,8 @@ const getProfile = gql`
 })
 export class HomeComponent implements OnInit {
   drinks: Drink[] = null;
+
+  setPosition;
   constructor(
     private route: Router,
     private apollo: Apollo,
@@ -37,6 +39,15 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(function(position) {
+    //     console.log('lat ', position.coords.latitude);
+    //     console.log('long', position.coords.longitude);
+    //   });
+    // } else {
+    //   console.log('err');
+    // }
+
     // check if valid token and set logged in status accordingly
     this.apollo
       .watchQuery<Query>({
