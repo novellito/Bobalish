@@ -29,6 +29,13 @@ const getProfile = gql`
 })
 export class HomeComponent implements OnInit {
   drinks: Drink[] = null;
+  coordinates: { latitude: number; longitude: number } = {
+    latitude: null,
+    longitude: null
+  };
+  isLoading = true;
+  locationDenied: boolean = false;
+  displayedColumns = ['name', 'distance', 'rating', 'review count'];
 
   setPosition;
   constructor(
@@ -39,14 +46,22 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(function(position) {
-    //     console.log('lat ', position.coords.latitude);
-    //     console.log('long', position.coords.longitude);
-    //   });
-    // } else {
-    //   console.log('err');
-    // }
+    if (navigator.geolocation) {
+      this.getPosition()
+        .then(position => {
+          this.coordinates.latitude = position.coords.latitude;
+          this.coordinates.longitude = position.coords.longitude;
+          this.isLoading = false;
+        })
+        .catch(err => {
+          console.log(err);
+          this.locationDenied = true;
+        });
+    } else {
+      alert(
+        'your browser does not support geolocation...time to use a newer one!'
+      );
+    }
 
     // check if valid token and set logged in status accordingly
     this.apollo
@@ -61,6 +76,13 @@ export class HomeComponent implements OnInit {
           this.route.navigate(['/login']);
         }
       });
+  }
+
+  // get the coordinates of the user (for the yelp api)
+  getPosition(): any {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
   }
 
   // Either update the drink or create a new one

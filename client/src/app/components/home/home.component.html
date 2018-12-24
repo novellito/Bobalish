@@ -53,4 +53,46 @@
   </button>
 
   <app-drinks-list *ngIf="drinks" [drinks]="drinks"></app-drinks-list>
+  <app-recommendations
+    *ngIf="coordinates.latitude && coordinates.longitude"
+    [coordinates]="coordinates"
+  ></app-recommendations>
+
+  <!-- this is the place holder table for when the coordinates have yet to load so a spinner appears -->
+  <table
+    *ngIf="isLoading && !locationDenied"
+    mat-table
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+    </ng-container>
+
+    <ng-container matColumnDef="distance">
+      <th mat-header-cell *matHeaderCellDef>Distance (miles)</th>
+    </ng-container>
+
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell *matHeaderCellDef>Rating</th>
+    </ng-container>
+
+    <ng-container matColumnDef="review count">
+      <th mat-header-cell *matHeaderCellDef>Review Count</th>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-card
+    *ngIf="isLoading && !locationDenied"
+    style="display: flex; justify-content: center; align-items: center"
+  >
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </mat-card>
+
+  <div *ngIf="locationDenied">
+    You must allow access to geolocation to get recommendations
+  </div>
 </div>

@@ -5,9 +5,10 @@ import { CommonModule } from '@angular/common';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { SharedModule } from '../modules/shared.module';
 import { AuthGuard } from './services/auth-guard.service';
+import { RecommendationsComponent } from './recommendations/recommendations.component';
 
 @NgModule({
-  declarations: [DrinksListComponent, HomeComponent],
+  declarations: [DrinksListComponent, HomeComponent, RecommendationsComponent],
   imports: [CommonModule, CurrencyMaskModule, SharedModule],
   exports: [HomeComponent],
   providers: [AuthGuard]

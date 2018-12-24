@@ -10,6 +10,13 @@ export type Drink = {
   price: number;
   id: string;
 };
+export type Location = {
+  name: string;
+  url: string;
+  distance: number;
+  rating: number;
+  review_count: number;
+};
 
 export type Query = {
   users: User[];

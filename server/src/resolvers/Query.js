@@ -8,7 +8,6 @@ const Query = {
     try {
       ({ jsonBody } = await client.search({
         term: 'boba',
-        location: data.location ? data.location : 'elmhurst, new york',
         longitude: data.longitude,
         latitude: data.latitude,
         categories:
@@ -18,8 +17,15 @@ const Query = {
     } catch (err) {
       console.log(err);
     }
-
-    return jsonBody.businesses.map(elem => elem.name);
+    return jsonBody.businesses.map(elem => {
+      return {
+        name: elem.name,
+        distance: (elem.distance / 1609.344).toFixed(2),
+        url: elem.url,
+        rating: elem.rating,
+        review_count: elem.review_count
+      };
+    });
   },
   users(parent, args, { prisma }, info) {
     const opArgs = {

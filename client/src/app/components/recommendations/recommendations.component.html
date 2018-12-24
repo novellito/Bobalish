@@ -1,0 +1,52 @@
+<div class="mat-elevation-z8">
+  <table
+    mat-table
+    [dataSource]="recommendationsData"
+    [class.isMobile]="isMobile"
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let recommendation">
+        <span class="mobile-label">Name</span>
+        <a target="_blank" href="{{ recommendation.url }}">
+          {{ recommendation.name }}
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="distance">
+      <th mat-header-cell *matHeaderCellDef>Distance (miles)</th>
+      <td mat-cell *matCellDef="let recommendation">
+        <span class="mobile-label">distance</span>{{ recommendation.distance }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="rating">
+      <th mat-header-cell *matHeaderCellDef>Rating</th>
+      <td mat-cell *matCellDef="let recommendation">
+        <span class="mobile-label">rating</span>
+        <span> {{ recommendation.rating }} </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="review count">
+      <th mat-header-cell *matHeaderCellDef>Review Count</th>
+      <td mat-cell *matCellDef="let recommendation">
+        <span class="mobile-label">review count</span>
+        {{ recommendation.review_count }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-card
+    *ngIf="isLoading"
+    style="display: flex; justify-content: center; align-items: center"
+  >
+    <mat-progress-spinner color="primary" mode="indeterminate">
+    </mat-progress-spinner>
+  </mat-card>
+</div>

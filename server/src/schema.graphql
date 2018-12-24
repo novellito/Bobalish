@@ -18,7 +18,7 @@ type Query {
   ): [Drink!]!
   me: User!
   drink(id: ID!): Drink!
-  locations(data: Coordinates!): [String!]!
+  locations(data: Coordinates!): [PlaceInfo!]!
 }
 
 type Mutation {
@@ -37,9 +37,8 @@ type AuthPayload {
 }
 
 input Coordinates {
-  longitude: Float
-  latitude: Float
-  location: String
+  longitude: Float!
+  latitude: Float!
 }
 
 input CreateUserInput {
@@ -68,6 +67,14 @@ input UpdateUserInput {
   name: String
   email: String
   password: String
+}
+
+type PlaceInfo {
+  name: String
+  distance: Float
+  url: String
+  rating: Float
+  review_count: Int
 }
 
 type User {
