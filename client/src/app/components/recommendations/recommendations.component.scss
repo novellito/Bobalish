@@ -1,8 +1,3 @@
-h1 {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  color: #202124;
-  font-weight: 500;
-}
 table {
   width: 100%;
   margin-top: 10px;
@@ -11,7 +6,14 @@ table {
 .mobile-label {
   display: none;
 }
-
+a {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  color: #3f51b5;
+  &:hover {
+    color: red;
+    transition: 0.2s;
+  }
+}
 @media (max-width: 500px) {
   .mobile-label {
     width: 100px;

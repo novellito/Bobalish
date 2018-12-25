@@ -1,5 +1,11 @@
+<mat-toolbar
+  >Bobalish
+  <div class="links">
+    <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+  </div>
+</mat-toolbar>
 <div class="container">
-  <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+  <h1>Welcome home {{ name }}!</h1>
   <app-drinks-list *ngIf="drinks" [drinks]="drinks"></app-drinks-list>
 
   <form id="ngForm" (ngSubmit)="handleSubmit(formRef)" #formRef="ngForm">
@@ -54,12 +60,8 @@
     Cancel
   </button>
 
-  <app-recommendations
-    *ngIf="coordinates.latitude && coordinates.longitude"
-    [coordinates]="coordinates"
-  ></app-recommendations>
-
   <!-- this is the place holder table for when the coordinates have yet to load so a spinner appears -->
+  <h1>Recommendations</h1>
   <table
     *ngIf="isLoading && !locationDenied"
     mat-table
@@ -96,4 +98,11 @@
   <div *ngIf="locationDenied">
     <h2>Please allow geolocation access to get recommendations</h2>
   </div>
+
+  <!-- end of placeholder -->
+
+  <app-recommendations
+    *ngIf="coordinates.latitude && coordinates.longitude"
+    [coordinates]="coordinates"
+  ></app-recommendations>
 </div>

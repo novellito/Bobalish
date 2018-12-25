@@ -1,4 +1,14 @@
 .container {
+  text-align: center;
+
+  .card-container {
+    background: #b3e5fc;
+    color: rgba(0, 0, 0, 0.6);
+  }
+  #logo {
+    width: 20%;
+  }
+
   .cred-fields {
     padding: 30px;
     h1 {
