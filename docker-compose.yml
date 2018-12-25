@@ -22,15 +22,15 @@ services:
       - '4000:4000'
     env_file:
       - ./config/dev/api.env
-  tests:
-    build:
-      context: server
-    volumes:
-      - /app/node_modules
-      - ./server:/app
-    env_file:
-      - ./config/dev/test.env
-    command: ['npm', 'run', 'test']
+  # tests:
+  #   build:
+  #     context: server
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./server:/app
+  #   env_file:
+  #     - ./config/dev/test.env
+  #   command: ['npm', 'run', 'test']
   prisma:
     image: prismagraphql/prisma:1.19
     restart: always
