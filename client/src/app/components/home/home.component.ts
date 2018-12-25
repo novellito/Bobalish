@@ -71,7 +71,6 @@ export class HomeComponent implements OnInit {
       })
       .valueChanges.subscribe(({ data: { me: body } }) => {
         if (body) {
-          console.log(body);
           this.name = body.name;
           this.drinks = body.drinks;
           this.auth.isLoggedIn = true;

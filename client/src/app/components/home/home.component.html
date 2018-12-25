@@ -1,7 +1,7 @@
-<mat-toolbar
-  >Bobalish
+<mat-toolbar class="nav">
+  Bobalish
   <div class="links">
-    <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+    <button mat-raised-button class="logout" (click)="logout()">Logout</button>
   </div>
 </mat-toolbar>
 <div class="container">
@@ -48,6 +48,7 @@
     color="primary"
     form="ngForm"
     type="submit"
+    class="submit"
   >
     {{ this.listManager.editing ? 'Update' : 'Submit' }}
   </button>

@@ -21,6 +21,9 @@
               hide ? 'visibility_off' : 'visibility'
             }}</mat-icon>
           </mat-form-field>
+          <span *ngIf="invalidCreds" style="color:red"
+            >Invalid Credentials</span
+          >
           <div class="card-footer">
             <button
               [disabled]="!email.value || !password.value"

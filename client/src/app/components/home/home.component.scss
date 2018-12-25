@@ -1,16 +1,28 @@
 h1 {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  color: #202124;
+  color: #212121;
   font-weight: 500;
 }
+.nav {
+  background: #ff5252;
+  color: white;
 
-.links {
-  display: flex;
-  margin-left: auto;
+  .logout {
+    background-color: #ff5252;
+    color: white;
+    &:hover {
+      background-color: red;
+    }
+  }
+  .links {
+    display: flex;
+    margin-left: auto;
+  }
 }
 
 @mixin container($val) {
   padding: $val;
+  background-color: #b3e5fc;
 }
 .container {
   @include container(50px);
@@ -20,6 +32,11 @@ h1 {
   width: 100%;
 }
 
+.submit {
+  &:hover {
+    background-color: #263aad;
+  }
+}
 @media (min-width: 992px) {
   .user-form {
     display: grid;

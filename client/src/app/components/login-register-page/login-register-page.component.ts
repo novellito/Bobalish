@@ -12,6 +12,7 @@ import decode from 'jwt-decode';
 export class LoginRegisterPageComponent implements OnInit {
   currentRoute: string = null;
   hide: boolean = true;
+  invalidCreds: boolean = false;
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [
     Validators.required,
@@ -74,14 +75,18 @@ export class LoginRegisterPageComponent implements OnInit {
         });
     } else {
       const { email, password } = form.value;
-      this.auth
-        .loginUser({ email, password })
-        .subscribe(({ data: { login: user } }) => {
+      this.auth.loginUser({ email, password }).subscribe(
+        ({ data: { login: user } }) => {
           if (user.token) {
             localStorage.setItem('token', user.token);
             this.route.navigate(['/home']);
+          } else {
           }
-        });
+        },
+        err => {
+          this.invalidCreds = true;
+        }
+      );
     }
   }
 }
